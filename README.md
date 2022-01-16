@@ -75,4 +75,4 @@ export let loader: LoaderFunction = ({ request }) => {
 
 ### Aknowledgements
 
-@sergioxda: for [remix-auth](https://github.com/sergiodxa/remix-auth), [remix-auth-strategy-template](https://github.com/sergiodxa/remix-auth-strategy-template) and for so many repositories and blog posts that make Remix easier to use and learn.
+@sergiodxa: for [remix-auth](https://github.com/sergiodxa/remix-auth), [remix-auth-strategy-template](https://github.com/sergiodxa/remix-auth-strategy-template) and for so many repositories and blog posts that make Remix easier to use and learn.
