@@ -28,6 +28,10 @@ export interface GitlabStrategyOptions {
   callbackURL: string;
   scope?: GitlabScope[];
   userAgent?: string;
+  baseURL?: string;
+  authorizationURL?: string;
+  tokenURL?: string;
+  userInfoURL?: string;
 }
 
 export interface GitlabProfile extends OAuth2Profile {
@@ -101,7 +105,7 @@ export class GitlabStrategy<User> extends OAuth2Strategy<
 
   private scope: GitlabScope[];
   private userAgent: string;
-  private userInfoURL = "https://gitlab.com/api/v4/user";
+  private userInfoURL: string;
 
   constructor(
     {
@@ -110,6 +114,10 @@ export class GitlabStrategy<User> extends OAuth2Strategy<
       callbackURL,
       scope,
       userAgent,
+      userInfoURL,
+      baseURL = "https://gitlab.com",
+      authorizationURL = `${baseURL}/oauth/authorize`,
+      tokenURL = `${baseURL}/oauth/token`,
     }: GitlabStrategyOptions,
     verify: StrategyVerifyCallback<
       User,
@@ -121,13 +129,14 @@ export class GitlabStrategy<User> extends OAuth2Strategy<
         clientID,
         clientSecret,
         callbackURL,
-        authorizationURL: "https://gitlab.com/oauth/authorize",
-        tokenURL: "https://gitlab.com/oauth/token",
+        authorizationURL,
+        tokenURL,
       },
       verify
     );
     this.scope = scope ?? ["read_user"];
     this.userAgent = userAgent ?? "Remix Auth";
+    this.userInfoURL = userInfoURL || `${baseURL}/api/v4/user`;
   }
 
   protected authorizationParams(): URLSearchParams {
